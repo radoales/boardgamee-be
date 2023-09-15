@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
 interface UserAttributes {
-  id: number
+  id: string
   name: string
   email: string
   username: string
@@ -45,7 +45,6 @@ User.init(
       type: DataTypes.STRING
     },
     id: {
-      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       type: DataTypes.UUID
     },
