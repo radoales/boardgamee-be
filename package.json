@@ -37,7 +37,6 @@
     "pg": "^8.11.3",
     "prettier": "^3.0.3",
     "sequelize": "^6.33.0",
-    "sequelize-typescript": "^2.1.5",
     "uuid": "^9.0.1"
   }
 }
