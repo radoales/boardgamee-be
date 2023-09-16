@@ -7,8 +7,8 @@ interface UserAttributes {
   email: string
   username: string
   external_id: string
-  created_at: number
-  updated_at: number
+  created_at: string
+  updated_at: string
   push_notification_token: string
 }
 
@@ -23,9 +23,9 @@ export class User extends Model<UserAttributes> {
 
   declare external_id: string
 
-  declare created_at: number
+  declare created_at: string
 
-  declare updated_at: number
+  declare updated_at: string
 
   declare push_notification_token: string
 }
