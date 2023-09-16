@@ -31,3 +31,33 @@ Content-Type: application/json
 
 ### Delete user
 DELETE http://localhost:3000/api/users/6642cccf-06ef-40ad-a93b-b54dd2b23d39 HTTP/1.1
+
+
+### Get all invitations
+GET http://localhost:3000/api/invitations
+
+### Get invitation by id
+GET http://localhost:3000/api/invitations/3e6d418c-b0be-4e61-80fc-59f16c0531e8
+
+### Create invitation
+POST http://localhost:3000/api/invitations
+Content-Type: application/json
+
+{
+    "sender_id": "86d2ce96-9e7e-40c7-90a5-f6442e3e5d49",
+    "receiver_id": "cfcf79ab-1208-4c5e-bafa-cac123828063",
+    "status": 1
+}
+
+### Update invitation
+PUT http://localhost:3000/api/invitations/3e6d418c-b0be-4e61-80fc-59f16c0531e8
+Content-Type: application/json
+
+{
+    "sender_id": "86d2ce96-9e7e-40c7-90a5-f6442e3e5d49",
+    "receiver_id": "cfcf79ab-1208-4c5e-bafa-cac123828063",
+    "status": 2
+}
+
+### Delete invitation
+DELETE http://localhost:3000/api/invitations/6642cccf-06ef-40ad-a93b-b54dd2b23d39

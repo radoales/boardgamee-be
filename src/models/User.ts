@@ -34,7 +34,7 @@ User.init(
   {
     created_at: {
       allowNull: false,
-      type: DataTypes.NUMBER
+      type: DataTypes.STRING
     },
     email: {
       allowNull: false,
@@ -58,7 +58,7 @@ User.init(
     },
     updated_at: {
       allowNull: false,
-      type: DataTypes.NUMBER
+      type: DataTypes.STRING
     },
     username: {
       allowNull: false,

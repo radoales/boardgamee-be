@@ -14,8 +14,10 @@
   },
   "plugins": ["@typescript-eslint", "prettier", "sort-keys-fix"],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "warn",
     "no-console": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn"
     "prettier/prettier": [
       "error",
       {
