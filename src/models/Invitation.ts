@@ -1,5 +1,6 @@
-import { Model, DataTypes } from 'sequelize'
+import { Model, DataTypes, ForeignKey } from 'sequelize'
 import sequelize from '../config/database.js'
+import User from './User.js'
 
 interface InvitationAttributes {
   id: string
@@ -12,8 +13,8 @@ interface InvitationAttributes {
 
 export class Invitation extends Model<InvitationAttributes> {
   declare id: string
-  declare sender_id: string
-  declare receiver_id: string
+  declare sender_id: ForeignKey<User['id']>
+  declare receiver_id: ForeignKey<User['id']>
   declare status: number
   declare created_at: string
   declare updated_at: string

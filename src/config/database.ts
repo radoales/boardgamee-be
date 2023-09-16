@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
-        rejectUnauthorized: false,
+        rejectUnauthorized: true,
         require: true
       }
     },
