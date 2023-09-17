@@ -61,3 +61,13 @@ Content-Type: application/json
 
 ### Delete invitation
 DELETE http://localhost:3000/api/invitations/6642cccf-06ef-40ad-a93b-b54dd2b23d39
+
+
+### Login
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "naydenov.radoslav@gmail.com",
+    "password": "testpassword"
+}
