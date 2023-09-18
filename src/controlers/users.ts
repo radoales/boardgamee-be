@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import User from '../models/User.js'
 import { v4 as uuidv4 } from 'uuid'
+import { NOW } from '../utils/constants.js'
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -35,12 +36,11 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const now = new Date().toISOString()
     const user = await User.create({
       ...req.body,
-      created_at: now,
+      created_at: NOW,
       id: uuidv4(),
-      updated_at: now
+      updated_at: NOW
     })
 
     return res.json(user)

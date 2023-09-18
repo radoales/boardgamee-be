@@ -5,7 +5,6 @@ interface UserAttributes {
   id: string
   name: string
   email: string
-  password: string
   username: string
   external_id: string
   created_at: string
@@ -15,21 +14,12 @@ interface UserAttributes {
 
 export class User extends Model<UserAttributes> {
   declare id: string
-
   declare name: string
-
   declare email: string
-
-  declare password: string
-
   declare username: string
-
   declare external_id: string
-
   declare created_at: string
-
   declare updated_at: string
-
   declare push_notification_token: string
 }
 
@@ -40,10 +30,6 @@ User.init(
       type: DataTypes.STRING
     },
     email: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    password: {
       allowNull: false,
       type: DataTypes.STRING
     },

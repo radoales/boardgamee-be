@@ -6,6 +6,7 @@ import usersRouter from './routes/users.js'
 import invitationsRouter from './routes/invitations.js'
 import authRouter from './routes/auth.js'
 import compression from 'compression'
+import authenticateToken from './middlewares/auth.js'
 
 const createServer = () => {
   const app = express()
@@ -15,7 +16,7 @@ const createServer = () => {
     .use(morgan('dev'))
     .use(bodyParser.json())
     .use(compression())
-    .use('/api/users', usersRouter)
+    .use('/api/users', authenticateToken, usersRouter)
     .use('/api/invitations', invitationsRouter)
     .use('/api/auth', authRouter)
 

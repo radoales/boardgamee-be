@@ -2,17 +2,31 @@ import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 
-// Middleware to protect routes
-function authenticateToken(
-  req: Request<User>,
-  res: Response,
-  next: NextFunction
-) {
-  const token = req.header('Authorization')
-  if (!token) return res.status(401).send('Access denied.')
+declare global {
+  namespace Express {
+    interface Request {
+      user?: User
+    }
+  }
+}
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, user: User) => {
-    if (err) return res.status(403).send('Invalid token.')
+const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (!token)
+    return res.status(401).json({
+      error: 'Unauthorized',
+      message: 'Missing token'
+    })
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err)
+      return res.status(403).json({
+        error: 'Forbidden',
+        message: err.message
+      })
+    req.user = user as User
     next()
   })
 }
