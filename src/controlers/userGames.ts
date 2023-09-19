@@ -44,14 +44,14 @@ export const createUserGame = async (req: Request, res: Response) => {
 
     console.log('user_id', user_id)
 
-    // const user = await User.findByPk(user_id)
-    // console.log('user', user)
-    // if (!user) {
-    //   return res.status(404).json({
-    //     error: 'User not found',
-    //     message: `User with ID ${user_id} not found`
-    //   })
-    // }
+    const user = await User.findByPk(user_id)
+    console.log('user', user)
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found',
+        message: `User with ID ${user_id} not found`
+      })
+    }
 
     const userGame = await UserGame.create({
       id: uuidv4(),
