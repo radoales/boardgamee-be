@@ -22,16 +22,15 @@ UserGame.init(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.UUID
     },
     game_id: {
       allowNull: false,
       type: DataTypes.STRING
     },
     user_id: {
-      allowNull: false,
-      type: DataTypes.STRING
+      allowNull: true,
+      type: DataTypes.UUID
     },
     created_at: {
       allowNull: false,

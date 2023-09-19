@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import UserGame from '../models/UserGame.js'
 import { User } from '../models/User.js'
+import { NOW } from '../utils/constants.js'
 
 export const getUserGames = async (req: Request, res: Response) => {
   try {
@@ -37,24 +38,27 @@ export const getUserGameById = async (req: Request, res: Response) => {
 }
 
 export const createUserGame = async (req: Request, res: Response) => {
+  console.log('here')
   try {
-    const now = new Date().toISOString()
     const { game_id, user_id } = req.body
 
-    const user = await User.findByPk(user_id)
-    if (!user) {
-      return res.status(404).json({
-        error: 'User not found',
-        message: `User with ID ${user_id} not found`
-      })
-    }
+    console.log('user_id', user_id)
+
+    // const user = await User.findByPk(user_id)
+    // console.log('user', user)
+    // if (!user) {
+    //   return res.status(404).json({
+    //     error: 'User not found',
+    //     message: `User with ID ${user_id} not found`
+    //   })
+    // }
 
     const userGame = await UserGame.create({
       id: uuidv4(),
+      user_id: `${user_id}`,
       game_id,
-      user_id,
-      created_at: now,
-      updated_at: now
+      created_at: NOW,
+      updated_at: NOW
     })
 
     return res.json(userGame)
@@ -93,8 +97,7 @@ export const updateUserGame = async (req: Request, res: Response) => {
     userGame.game_id = game_id ?? userGame.game_id
     userGame.user_id = user_id ?? userGame.user_id
 
-    const now = new Date().toISOString()
-    userGame.updated_at = now
+    userGame.updated_at = NOW
 
     await userGame.save()
 

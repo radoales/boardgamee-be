@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import Invitation from '../models/Invitation.js'
+import { NOW } from '../utils/constants.js'
 
 export const getInvitations = async (req: Request, res: Response) => {
   try {
@@ -37,15 +38,14 @@ export const getInvitationById = async (req: Request, res: Response) => {
 
 export const createInvitation = async (req: Request, res: Response) => {
   try {
-    const now = new Date().toISOString()
     const { sender_id, receiver_id, status } = req.body
     const invitation = await Invitation.create({
       id: uuidv4(),
       sender_id,
       receiver_id,
       status,
-      created_at: now,
-      updated_at: now
+      created_at: NOW,
+      updated_at: NOW
     })
 
     return res.json(invitation)
@@ -75,8 +75,7 @@ export const updateInvitation = async (req: Request, res: Response) => {
     invitation.receiver_id = receiver_id ?? invitation.receiver_id
     invitation.status = status ?? invitation.status
 
-    const now = new Date().toISOString()
-    invitation.updated_at = now
+    invitation.updated_at = NOW
 
     await invitation.save()
 
