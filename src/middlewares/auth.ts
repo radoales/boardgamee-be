@@ -20,7 +20,7 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
       message: 'Missing token'
     })
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+  jwt.verify(token, process.env.SECRET_KEY_ACCESS_TOKEN, (err, user) => {
     if (err)
       return res.status(403).json({
         error: 'Forbidden',

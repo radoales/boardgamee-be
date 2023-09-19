@@ -34,23 +34,29 @@ export const register = async (req: Request, res: Response) => {
       username: ''
     })
 
-    await Auth.create({
-      id: uuidv4(),
-      password: hashedPassword,
-      user_id: userId,
-      created_at: NOW,
-      updated_at: NOW
-    })
-
     const accessToken = jwt.sign(
       { email: user.email },
-      process.env.SECRET_KEY,
+      process.env.SECRET_KEY_ACCESS_TOKEN,
       {
         expiresIn: '1h'
       }
     )
 
-    return res.status(201).json({ accessToken })
+    const refreshToken = jwt.sign(
+      { email: user.email },
+      process.env.SECRET_KEY_REFRESH_TOKEN
+    )
+
+    await Auth.create({
+      id: uuidv4(),
+      password: hashedPassword,
+      user_id: userId,
+      created_at: NOW,
+      updated_at: NOW,
+      refresh_token: refreshToken
+    })
+
+    return res.status(201).json({ accessToken, refreshToken })
   } catch (error) {
     return res.status(500).json({
       error: 'Internal Server Error',
@@ -80,11 +86,12 @@ export const login = async (req: Request, res: Response) => {
     if (await bycript.compare(password, auth.password)) {
       const accessToken = jwt.sign(
         { email: user.email },
-        process.env.SECRET_KEY,
+        process.env.SECRET_KEY_ACCESS_TOKEN,
         {
           expiresIn: '1h'
         }
       )
+
       return res.status(200).json({ accessToken })
     } else {
       return res.status(401).json({
@@ -96,6 +103,69 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({
       error: 'Unauthorized',
       message: 'Invalid password'
+    })
+  }
+}
+
+export const refreshAccessToken = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body
+  console.log('refreshToken', refreshToken)
+
+  try {
+    const auth = await Auth.findOne({ where: { refresh_token: refreshToken } })
+    if (!auth) {
+      return res.status(401).json({
+        error: 'Unauthorized',
+        message: 'Invalid refresh token'
+      })
+    }
+
+    jwt.verify(
+      refreshToken,
+      process.env.SECRET_KEY_REFRESH_TOKEN,
+      (err: any, decoded: { email: string }) => {
+        if (err) {
+          return res.status(401).json({
+            error: 'Unauthorized',
+            message: ` not valid ${err.message}`
+          })
+        }
+
+        const accessToken = jwt.sign(
+          { email: decoded.email },
+          process.env.SECRET_KEY_ACCESS_TOKEN,
+          {
+            expiresIn: '1h'
+          }
+        )
+
+        return res.status(200).json({ accessToken })
+      }
+    )
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
+    })
+  }
+}
+
+export const logout = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body
+
+  try {
+    await Auth.update(
+      { refresh_token: null },
+      { where: { refresh_token: refreshToken } }
+    )
+
+    return res.status(200).json({
+      message: 'Logout successful'
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
     })
   }
 }

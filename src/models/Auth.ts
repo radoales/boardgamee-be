@@ -8,6 +8,7 @@ interface AuthAttributes {
   password: string
   created_at: string
   updated_at: string
+  refresh_token?: string
 }
 
 export class Auth extends Model<AuthAttributes> {
@@ -16,6 +17,7 @@ export class Auth extends Model<AuthAttributes> {
   declare password: string
   declare created_at: string
   declare updated_at: string
+  declare refresh_token?: string
 }
 
 Auth.init(
@@ -38,6 +40,9 @@ Auth.init(
     },
     updated_at: {
       allowNull: false,
+      type: DataTypes.STRING
+    },
+    refresh_token: {
       type: DataTypes.STRING
     }
   },
