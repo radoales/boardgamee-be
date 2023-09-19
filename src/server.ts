@@ -7,6 +7,7 @@ import invitationsRouter from './routes/invitations.js'
 import authRouter from './routes/auth.js'
 import compression from 'compression'
 import authenticateToken from './middlewares/auth.js'
+import userGamesRouter from './routes/userGames.js'
 
 const createServer = () => {
   const app = express()
@@ -17,7 +18,8 @@ const createServer = () => {
     .use(bodyParser.json())
     .use(compression())
     .use('/api/users', authenticateToken, usersRouter)
-    .use('/api/invitations', invitationsRouter)
+    .use('/api/invitations', authenticateToken, invitationsRouter)
+    .use('/api/usergames', authenticateToken, userGamesRouter)
     .use('/api/auth', authRouter)
 
   app.listen(3000, () => {

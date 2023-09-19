@@ -92,6 +92,20 @@ export const login = async (req: Request, res: Response) => {
         }
       )
 
+      if (auth.refresh_token === null) {
+        const refreshToken = jwt.sign(
+          { email: user.email },
+          process.env.SECRET_KEY_REFRESH_TOKEN
+        )
+
+        await Auth.update(
+          { refresh_token: refreshToken },
+          { where: { user_id: user.id } }
+        )
+
+        return res.status(200).json({ accessToken, refreshToken })
+      }
+
       return res.status(200).json({ accessToken })
     } else {
       return res.status(401).json({
