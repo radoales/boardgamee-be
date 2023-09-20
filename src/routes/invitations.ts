@@ -6,7 +6,7 @@ import {
   getInvitationById,
   getInvitations,
   updateInvitation
-} from '../controlers/invitations.js'
+} from '../controlers/invitations'
 
 const router = express.Router()
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import Invitation from '../models/Invitation.js'
-import { NOW } from '../utils/constants.js'
+import Invitation from '../models/Invitation'
+import { NOW } from '../utils/constants'
 
 export const getInvitations = async (req: Request, res: Response) => {
   try {

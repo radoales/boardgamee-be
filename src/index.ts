@@ -1,4 +1,4 @@
-import createServer from './server.js'
+import createServer from './server'
 import dotenv from 'dotenv'
 
 dotenv.config()

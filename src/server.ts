@@ -2,12 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
-import usersRouter from './routes/users.js'
-import invitationsRouter from './routes/invitations.js'
-import authRouter from './routes/auth.js'
+import usersRouter from './routes/users'
+import invitationsRouter from './routes/invitations'
+import authRouter from './routes/auth'
 import compression from 'compression'
-import authenticateToken from './middlewares/auth.js'
-import userGamesRouter from './routes/userGames.js'
+import authenticateToken from './middlewares/auth'
+import userGamesRouter from './routes/userGames'
 
 const createServer = () => {
   const app = express()

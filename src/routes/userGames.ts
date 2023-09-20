@@ -5,7 +5,7 @@ import {
   getUserGameById,
   getUserGames,
   updateUserGame
-} from '../controlers/userGames.js'
+} from '../controlers/userGames'
 
 const router = express.Router()
 

@@ -1,11 +1,6 @@
 import express from 'express'
-import {
-  login,
-  logout,
-  refreshAccessToken,
-  register
-} from '../controlers/auth.js'
-import authenticateToken from '../middlewares/auth.js'
+import { login, logout, refreshAccessToken, register } from '../controlers/auth'
+import authenticateToken from '../middlewares/auth'
 
 const router = express.Router()
 

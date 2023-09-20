@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "NodeNext", // Use "commonjs" for Node.js projects
+    "moduleResolution": "node", // Use "node" for Node.js projects
     "target": "ES2020",
     "sourceMap": true,
     "outDir": "dist",

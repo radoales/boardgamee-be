@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import User from '../models/User.js'
+import User from '../models/User'
 import bycript from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 import jwt from 'jsonwebtoken'
-import { hashPassword } from '../utils/auth.js'
-import Auth from '../models/Auth.js'
-import { NOW } from '../utils/constants.js'
+import { hashPassword } from '../utils/auth'
+import Auth from '../models/Auth'
+import { NOW } from '../utils/constants'
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body

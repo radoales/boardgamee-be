@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import UserGame from '../models/UserGame.js'
-import { User } from '../models/User.js'
-import { NOW } from '../utils/constants.js'
+import UserGame from '../models/UserGame'
+import { User } from '../models/User'
+import { NOW } from '../utils/constants'
 
 export const getUserGames = async (req: Request, res: Response) => {
   try {

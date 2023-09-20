@@ -1,6 +1,6 @@
 import { Model, DataTypes, ForeignKey } from 'sequelize'
-import sequelize from '../config/database.js'
-import { User } from './User.js'
+import sequelize from '../config/database'
+import { User } from './User'
 
 interface AuthAttributes {
   id: string
