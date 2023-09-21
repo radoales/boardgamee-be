@@ -38,7 +38,6 @@ export const getUserGameById = async (req: Request, res: Response) => {
 }
 
 export const createUserGame = async (req: Request, res: Response) => {
-  console.log('here')
   try {
     const { game_id, user_id } = req.body
 

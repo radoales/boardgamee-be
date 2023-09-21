@@ -8,6 +8,7 @@ import authRouter from './routes/auth.js'
 import compression from 'compression'
 import authenticateToken from './middlewares/auth.js'
 import userGamesRouter from './routes/userGames.js'
+import visitedGamesRouter from './routes/visitedGames.js'
 
 const createServer = () => {
   const app = express()
@@ -20,6 +21,7 @@ const createServer = () => {
     .use('/api/users', authenticateToken, usersRouter)
     .use('/api/invitations', authenticateToken, invitationsRouter)
     .use('/api/usergames', authenticateToken, userGamesRouter)
+    .use('/api/visitedgames', authenticateToken, visitedGamesRouter)
     .use('/api/auth', authRouter)
 
   app.listen(3000, () => {
