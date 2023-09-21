@@ -55,7 +55,7 @@ export const createUserGame = async (req: Request, res: Response) => {
 
     const userGame = await UserGame.create({
       id: uuidv4(),
-      user_id: `${user_id}`,
+      user_id,
       game_id,
       created_at: NOW,
       updated_at: NOW
