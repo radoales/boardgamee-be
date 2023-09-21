@@ -20,24 +20,24 @@ export class VisitedGame extends Model<VisitedGameAttributes> {
 
 VisitedGame.init(
   {
-    id: {
-      type: DataTypes.UUID
+    created_at: {
+      allowNull: false,
+      type: DataTypes.STRING
     },
     game_id: {
       primaryKey: true,
       type: DataTypes.STRING
     },
-    user_id: {
-      primaryKey: true,
+    id: {
       type: DataTypes.UUID
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.STRING
     },
     updated_at: {
       allowNull: false,
       type: DataTypes.STRING
+    },
+    user_id: {
+      primaryKey: true,
+      type: DataTypes.UUID
     }
   },
   {

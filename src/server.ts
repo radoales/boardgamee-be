@@ -24,7 +24,7 @@ const createServer = () => {
     .use('/api/visitedgames', authenticateToken, visitedGamesRouter)
     .use('/api/auth', authRouter)
 
-  app.listen(3000, () => {
+  app.listen(process.env.PORT, () => {
     // eslint-disable-next-line no-console
     console.log('Running on port 3000')
   })

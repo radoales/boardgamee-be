@@ -1,5 +1,5 @@
+/* eslint-disable no-console */
 import { Request, Response } from 'express'
-import { v4 as uuidv4 } from 'uuid'
 import VisitedGame from '../models/VisitedGame.js'
 import { User } from '../models/User.js'
 import { NOW } from '../utils/constants.js'
@@ -65,8 +65,8 @@ export const upsertVisitedGame = async (req: Request, res: Response) => {
     const [visitedGame] = await VisitedGame.upsert(
       {
         game_id,
-        user_id,
-        updated_at: NOW
+        updated_at: NOW,
+        user_id
       },
       { returning: true }
     )
