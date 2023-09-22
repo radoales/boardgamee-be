@@ -17,7 +17,7 @@ export const getUsers = async (req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
-    const user = await User.findByPk(id)
+    const user = await User.findOne({ where: { external_id: id } }) //TODO: change to findByPk(id) when firebase is gone
 
     if (!user) {
       return res.status(404).json({
