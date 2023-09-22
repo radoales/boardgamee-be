@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import UserGame from '../models/UserGame.js'
@@ -16,19 +17,29 @@ export const getUserGames = async (req: Request, res: Response) => {
   }
 }
 
-export const getUserGameById = async (req: Request, res: Response) => {
+export const getUserGameByUserId = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id
-    const userGame = await UserGame.findByPk(id)
+    const userId = req.params.userId
 
-    if (!userGame) {
+    const user = await User.findByPk(userId)
+
+    if (!user) {
       return res.status(404).json({
-        error: 'UserGame not found',
-        message: `UserGame with ID ${id} not found`
+        error: 'User not found',
+        message: `User with ID ${userId} not found`
       })
     }
 
-    return res.json(userGame)
+    const userGames = await UserGame.findAll({ where: { user_id: userId } })
+
+    if (!userGames) {
+      return res.status(404).json({
+        error: 'UserGames not found',
+        message: `UserGames not found`
+      })
+    }
+
+    return res.json(userGames)
   } catch (error) {
     console.error('Error:', error)
     return res
@@ -41,8 +52,6 @@ export const createUserGame = async (req: Request, res: Response) => {
   try {
     const { game_id, user_id } = req.body
 
-    console.log('user_id', user_id)
-
     const user = await User.findByPk(user_id)
     console.log('user', user)
     if (!user) {
@@ -53,11 +62,11 @@ export const createUserGame = async (req: Request, res: Response) => {
     }
 
     const userGame = await UserGame.create({
-      id: uuidv4(),
-      user_id,
-      game_id,
       created_at: NOW,
-      updated_at: NOW
+      game_id,
+      id: uuidv4(),
+      updated_at: NOW,
+      user_id
     })
 
     return res.json(userGame)

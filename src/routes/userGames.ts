@@ -2,7 +2,7 @@ import express from 'express'
 import {
   createUserGame,
   deleteUserGame,
-  getUserGameById,
+  getUserGameByUserId,
   getUserGames,
   updateUserGame
 } from '../controlers/userGames.js'
@@ -10,7 +10,7 @@ import {
 const router = express.Router()
 
 router.get('/', getUserGames)
-router.get('/:id', getUserGameById)
+router.get('/:userId', getUserGameByUserId)
 router.post('/', createUserGame)
 router.put('/:id', updateUserGame)
 router.delete('/:id', deleteUserGame)
