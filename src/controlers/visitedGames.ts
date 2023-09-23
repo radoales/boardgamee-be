@@ -30,7 +30,7 @@ export const getVisitedGamesByUserId = async (req: Request, res: Response) => {
 
     const visitedGames = await VisitedGame.findAll({
       limit: 10,
-      order: [['updated_at', 'DESC']],
+      order: [['updated_at', 'ASC']],
       where: { user_id: userId }
     })
 
