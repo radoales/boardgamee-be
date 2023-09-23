@@ -93,7 +93,7 @@ export const login = async (req: Request, res: Response) => {
 
       if (!auth.refresh_token) {
         const refreshToken = jwt.sign(
-          { email: user.email },
+          { email: user.email, id: user.id },
           process.env.SECRET_KEY_REFRESH_TOKEN
         )
 
