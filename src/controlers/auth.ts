@@ -91,17 +91,23 @@ export const login = async (req: Request, res: Response) => {
         }
       )
 
-      const refreshToken = jwt.sign(
-        { email: user.email },
-        process.env.SECRET_KEY_REFRESH_TOKEN
-      )
+      if (!auth.refresh_token) {
+        const refreshToken = jwt.sign(
+          { email: user.email },
+          process.env.SECRET_KEY_REFRESH_TOKEN
+        )
 
-      await Auth.update(
-        { refresh_token: refreshToken },
-        { where: { user_id: user.id } }
-      )
+        await Auth.update(
+          { refresh_token: refreshToken },
+          { where: { user_id: user.id } }
+        )
 
-      return res.status(200).json({ accessToken, refreshToken })
+        return res.status(200).json({ accessToken, refreshToken })
+      }
+
+      return res
+        .status(200)
+        .json({ accessToken, refreshToken: auth.refresh_token })
     } else {
       return res.status(401).json({
         error: 'Unauthorized',
