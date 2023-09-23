@@ -6,7 +6,6 @@ interface UserAttributes {
   name: string
   email: string
   username: string
-  external_id: string
   created_at: string
   updated_at: string
   push_notification_token: string
@@ -17,7 +16,6 @@ export class User extends Model<UserAttributes> {
   declare name: string
   declare email: string
   declare username: string
-  declare external_id: string
   declare created_at: string
   declare updated_at: string
   declare push_notification_token: string
@@ -30,10 +28,6 @@ User.init(
       type: DataTypes.STRING
     },
     email: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    external_id: {
       allowNull: false,
       type: DataTypes.STRING
     },

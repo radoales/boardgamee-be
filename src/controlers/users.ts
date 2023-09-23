@@ -56,8 +56,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const { name, email, username, external_id, push_notification_token } =
-      req.body
+    const { name, email, username, push_notification_token } = req.body
 
     const user = await User.findByPk(id)
 
@@ -71,7 +70,6 @@ export const updateUser = async (req: Request, res: Response) => {
     user.name = name ?? user.name
     user.email = email ?? user.email
     user.username = username ?? user.username
-    user.external_id = external_id ?? user.external_id
     user.push_notification_token =
       push_notification_token ?? user.push_notification_token
 

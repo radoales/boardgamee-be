@@ -26,7 +26,6 @@ export const register = async (req: Request, res: Response) => {
     const user = await User.create({
       created_at: NOW,
       email,
-      external_id: '',
       id: userId,
       name: '',
       push_notification_token: '',
@@ -58,7 +57,6 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(201).json({ accessToken, refreshToken })
   } catch (error) {
-    console.log('error', error)
     return res.status(500).json({
       error: error.name,
       message: error.parent.detail
@@ -137,7 +135,7 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
     jwt.verify(
       refreshToken,
       process.env.SECRET_KEY_REFRESH_TOKEN,
-      (err: any, decoded: { email: string }) => {
+      (err: { message: string }, decoded: { email: string }) => {
         if (err) {
           return res.status(401).json({
             error: 'Unauthorized',
