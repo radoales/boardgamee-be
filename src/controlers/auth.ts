@@ -24,13 +24,13 @@ export const register = async (req: Request, res: Response) => {
     const userId = uuidv4()
 
     const user = await User.create({
-      id: userId,
-      email,
       created_at: NOW,
-      updated_at: NOW,
+      email,
       external_id: '',
+      id: userId,
       name: '',
       push_notification_token: '',
+      updated_at: NOW,
       username: ''
     })
 
@@ -43,24 +43,25 @@ export const register = async (req: Request, res: Response) => {
     )
 
     const refreshToken = jwt.sign(
-      { email: user.email },
+      { email: user.email, id: userId },
       process.env.SECRET_KEY_REFRESH_TOKEN
     )
 
     await Auth.create({
+      created_at: NOW,
       id: uuidv4(),
       password: hashedPassword,
-      user_id: userId,
-      created_at: NOW,
+      refresh_token: refreshToken,
       updated_at: NOW,
-      refresh_token: refreshToken
+      user_id: userId
     })
 
     return res.status(201).json({ accessToken, refreshToken })
   } catch (error) {
+    console.log('error', error)
     return res.status(500).json({
-      error: 'Internal Server Error',
-      message: error.message
+      error: error.name,
+      message: error.parent.detail
     })
   }
 }
@@ -123,7 +124,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const refreshAccessToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body
-  console.log('refreshToken', refreshToken)
 
   try {
     const auth = await Auth.findOne({ where: { refresh_token: refreshToken } })
