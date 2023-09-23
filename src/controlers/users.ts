@@ -59,7 +59,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const { name, email, username, external_id, push_notification_token } =
       req.body
 
-    const user = await User.findOne({ where: { id } })
+    const user = await User.findByPk(id)
 
     if (!user) {
       return res.status(404).json({
