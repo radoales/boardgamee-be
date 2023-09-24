@@ -15,9 +15,10 @@ const sendNotification = async ({
   data,
   title
 }: Notification) => {
+  console.log('notification')
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
-  const expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN })
+  const expo = new Expo({ accessToken: process.env.EXPO_PUSH_TOKEN })
 
   // Create the messages that you want to send to clients
   const messages = []
