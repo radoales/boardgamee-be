@@ -24,13 +24,10 @@ export const register = async (req: Request, res: Response) => {
     const userId = uuidv4()
 
     const user = await User.create({
+      ...req.body,
       created_at: NOW,
-      email,
       id: userId,
-      name: '',
-      push_notification_token: '',
-      updated_at: NOW,
-      username: ''
+      updated_at: NOW
     })
 
     const accessToken = jwt.sign(
