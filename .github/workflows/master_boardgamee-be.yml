@@ -1,4 +1,4 @@
-name: boardgamee-be
+name: Build and deploy boardgamee-be
 
 on:
   push:
@@ -39,6 +39,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5510C8F7838B49B4A6832D623E47A2A2 }}
           package: .
-
-      - name: Send notification
-        run: echo "Deployment completed successfully!"
