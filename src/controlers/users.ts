@@ -23,9 +23,10 @@ export const searchUsers = async (req: Request, res: Response) => {
     const users = await User.findAll({
       where: {
         [Op.or]: [
-          { name: { [Op.like]: `%${searchQuery}%` } },
-          { username: { [Op.like]: `%${searchQuery}%` } },
-          { email: { [Op.like]: `%${searchQuery}%` } }
+          { name: { [Op.iLike]: `${searchQuery}%` } },
+          { name: { [Op.like]: `% ${searchQuery}%` } },
+          { username: { [Op.iLike]: `${searchQuery}%` } },
+          { email: { [Op.iLike]: `${searchQuery}%` } }
         ]
       }
     })
