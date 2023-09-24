@@ -8,9 +8,10 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await User.findAll()
     return res.json(users)
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -24,7 +25,7 @@ export const searchUsers = async (req: Request, res: Response) => {
       where: {
         [Op.or]: [
           { name: { [Op.iLike]: `${searchQuery}%` } },
-          { name: { [Op.like]: `% ${searchQuery}%` } },
+          { name: { [Op.iLike]: `% ${searchQuery}%` } },
           { username: { [Op.iLike]: `${searchQuery}%` } },
           { email: { [Op.iLike]: `${searchQuery}%` } }
         ]
@@ -33,9 +34,10 @@ export const searchUsers = async (req: Request, res: Response) => {
 
     return res.json(users)
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -53,9 +55,10 @@ export const getUserById = async (req: Request, res: Response) => {
 
     return res.json(user)
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -72,9 +75,10 @@ export const createUser = async (req: Request, res: Response) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('error', error)
-    return res
-      .status(409)
-      .json({ error: 'Conflict', message: error.original.message })
+    return res.status(409).json({
+      error: 'Conflict',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -107,9 +111,10 @@ export const updateUser = async (req: Request, res: Response) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('error', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -131,8 +136,9 @@ export const deleteUser = async (req: Request, res: Response) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('error', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }

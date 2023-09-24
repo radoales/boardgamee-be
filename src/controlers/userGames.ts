@@ -11,9 +11,10 @@ export const getUserGames = async (req: Request, res: Response) => {
     return res.json(userGames)
   } catch (error) {
     console.error('Error:', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -42,9 +43,10 @@ export const getUserGameByUserId = async (req: Request, res: Response) => {
     return res.json(userGames)
   } catch (error) {
     console.error('Error:', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -72,9 +74,10 @@ export const createUserGame = async (req: Request, res: Response) => {
     return res.json(userGame)
   } catch (error) {
     console.error('Error:', error)
-    return res
-      .status(409)
-      .json({ error: 'Conflict', message: error.original.message })
+    return res.status(409).json({
+      error: 'Conflict',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -112,9 +115,10 @@ export const updateUserGame = async (req: Request, res: Response) => {
     return res.json({ message: 'UserGame updated successfully', userGame })
   } catch (error) {
     console.error('Error:', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
 
@@ -135,8 +139,9 @@ export const deleteUserGame = async (req: Request, res: Response) => {
     return res.json({ message: 'UserGame deleted successfully' })
   } catch (error) {
     console.error('Error:', error)
-    return res
-      .status(500)
-      .json({ error: 'Internal server error', message: error.original.message })
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.original?.message ?? error.message
+    })
   }
 }
