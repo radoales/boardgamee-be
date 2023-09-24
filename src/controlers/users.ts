@@ -14,6 +14,30 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 }
 
+import { Op } from 'sequelize'
+
+export const searchUsers = async (req: Request, res: Response) => {
+  const { searchQuery } = req.query
+
+  try {
+    const users = await User.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${searchQuery}%` } },
+          { username: { [Op.like]: `%${searchQuery}%` } },
+          { email: { [Op.like]: `%${searchQuery}%` } }
+        ]
+      }
+    })
+
+    return res.json(users)
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: 'Internal server error', message: error.original.message })
+  }
+}
+
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
