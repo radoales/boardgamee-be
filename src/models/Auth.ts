@@ -22,28 +22,28 @@ export class Auth extends Model<AuthAttributes> {
 
 Auth.init(
   {
+    created_at: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     id: {
       primaryKey: true,
-      type: DataTypes.UUID
-    },
-    user_id: {
-      allowNull: false,
       type: DataTypes.UUID
     },
     password: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    created_at: {
-      allowNull: false,
+    refresh_token: {
       type: DataTypes.STRING
     },
     updated_at: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    refresh_token: {
-      type: DataTypes.STRING
+    user_id: {
+      allowNull: false,
+      type: DataTypes.UUID
     }
   },
   {

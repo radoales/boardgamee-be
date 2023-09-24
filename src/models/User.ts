@@ -36,7 +36,7 @@ User.init(
       type: DataTypes.UUID
     },
     name: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.STRING
     },
     push_notification_token: {

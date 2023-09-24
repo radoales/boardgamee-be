@@ -27,7 +27,8 @@ export const register = async (req: Request, res: Response) => {
       ...req.body,
       created_at: NOW,
       id: userId,
-      updated_at: NOW
+      updated_at: NOW,
+      username: email.split('@')[0]
     })
 
     const accessToken = jwt.sign(
@@ -56,7 +57,7 @@ export const register = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(500).json({
       error: error.name,
-      message: error.parent.detail
+      message: error.parent?.detail ?? error.message
     })
   }
 }
