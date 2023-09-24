@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import Invitation from '../models/Invitation.js'
 import { NOW } from '../utils/constants.js'
 import { Op } from 'sequelize'
+import sendNotification from '../utils/notifications.js'
+import User from '../models/User.js'
 
 export const getInvitations = async (req: Request, res: Response) => {
   try {
@@ -55,6 +57,18 @@ export const createInvitation = async (req: Request, res: Response) => {
       status,
       updated_at: NOW
     })
+
+    const sender = await User.findByPk(sender_id)
+    const receiver = await User.findByPk(receiver_id)
+
+    if (receiver) {
+      await sendNotification({
+        body: `${sender?.name} wants to connect with you!`,
+        data: { invitation },
+        pushTokens: [receiver.push_notification_token],
+        title: 'New Friend Request'
+      })
+    }
 
     return res.json(invitation)
   } catch (error) {
