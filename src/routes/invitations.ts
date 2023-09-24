@@ -11,7 +11,7 @@ import {
 const router = express.Router()
 
 router.get('/', getInvitations)
-router.get('/:id', getInvitationByUserId)
+router.get('/:userId', getInvitationByUserId)
 router.post('/', createInvitation)
 router.put('/:id', updateInvitation)
 router.delete('/:id', deleteInvitation)
