@@ -3,7 +3,7 @@ import express from 'express'
 import {
   createInvitation,
   deleteInvitation,
-  getInvitationById,
+  getInvitationByUserId,
   getInvitations,
   updateInvitation
 } from '../controlers/invitations.js'
@@ -11,7 +11,7 @@ import {
 const router = express.Router()
 
 router.get('/', getInvitations)
-router.get('/:id', getInvitationById)
+router.get('/:id', getInvitationByUserId)
 router.post('/', createInvitation)
 router.put('/:id', updateInvitation)
 router.delete('/:id', deleteInvitation)
