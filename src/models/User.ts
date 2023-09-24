@@ -9,6 +9,7 @@ interface UserAttributes {
   created_at: string
   updated_at: string
   push_notification_token: string
+  avatar_url?: string
 }
 
 export class User extends Model<UserAttributes> {
@@ -19,10 +20,15 @@ export class User extends Model<UserAttributes> {
   declare created_at: string
   declare updated_at: string
   declare push_notification_token: string
+  declare avatar_url?: string
 }
 
 User.init(
   {
+    avatar_url: {
+      allowNull: true,
+      type: DataTypes.STRING
+    },
     created_at: {
       allowNull: false,
       type: DataTypes.STRING

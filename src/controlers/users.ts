@@ -80,7 +80,8 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const { name, email, username, push_notification_token } = req.body
+    const { name, email, username, push_notification_token, avatar_url } =
+      req.body
 
     const user = await User.findByPk(id)
 
@@ -96,6 +97,8 @@ export const updateUser = async (req: Request, res: Response) => {
     user.username = username ?? user.username
     user.push_notification_token =
       push_notification_token ?? user.push_notification_token
+    user.updated_at = NOW
+    user.avatar_url = avatar_url ?? user.avatar_url
 
     await user.save()
 
