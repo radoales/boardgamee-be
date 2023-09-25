@@ -64,7 +64,6 @@ export const createInvitation = async (req: Request, res: Response) => {
     if (receiver) {
       await sendNotification({
         body: `${sender?.name} wants to connect with you!`,
-        data: { invitation },
         pushTokens: [receiver.push_notification_token],
         title: 'New Friend Request'
       })
