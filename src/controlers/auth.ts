@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import { hashPassword } from '../utils/auth.js'
 import Auth from '../models/Auth.js'
 import { NOW } from '../utils/constants.js'
+import { Op } from 'sequelize'
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -63,9 +64,15 @@ export const register = async (req: Request, res: Response) => {
 }
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { email, password }: { email: string; password: string } = req.body
 
-  const user = await User.findOne({ where: { email } })
+  const user = await User.findOne({
+    where: {
+      email: {
+        [Op.iLike]: email
+      }
+    }
+  })
   if (!user) {
     return res.status(404).json({
       error: 'User not found',
