@@ -1,1 +1,1 @@
-export const NOW = new Date().toISOString()
+export const getTimestampNow = () => new Date().toISOString()

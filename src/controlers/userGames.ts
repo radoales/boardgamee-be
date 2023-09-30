@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import UserGame from '../models/UserGame.js'
 import { User } from '../models/User.js'
-import { NOW } from '../utils/constants.js'
+import { getTimestampNow } from '../utils/constants.js'
 
 export const getUserGames = async (req: Request, res: Response) => {
   try {
@@ -64,10 +64,10 @@ export const createUserGame = async (req: Request, res: Response) => {
     }
 
     const userGame = await UserGame.create({
-      created_at: NOW,
+      created_at: getTimestampNow(),
       game_id,
       id: uuidv4(),
-      updated_at: NOW,
+      updated_at: getTimestampNow(),
       user_id
     })
 
@@ -108,7 +108,7 @@ export const updateUserGame = async (req: Request, res: Response) => {
     userGame.game_id = game_id ?? userGame.game_id
     userGame.user_id = user_id ?? userGame.user_id
 
-    userGame.updated_at = NOW
+    userGame.updated_at = getTimestampNow()
 
     await userGame.save()
 

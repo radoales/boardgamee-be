@@ -2,6 +2,7 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import Invitation from '../models/Invitation.js'
+import { getTimestampNow } from '../utils/constants.js'
 import { Op } from 'sequelize'
 import sendNotification from '../utils/notifications.js'
 import User from '../models/User.js'
@@ -49,12 +50,12 @@ export const createInvitation = async (req: Request, res: Response) => {
   try {
     const { sender_id, receiver_id, status } = req.body
     const invitation = await Invitation.create({
-      created_at: new Date().toISOString(),
+      created_at: getTimestampNow(),
       id: uuidv4(),
       receiver_id,
       sender_id,
       status,
-      updated_at: new Date().toISOString()
+      updated_at: getTimestampNow()
     })
 
     const sender = await User.findByPk(sender_id)
@@ -99,7 +100,7 @@ export const updateInvitation = async (req: Request, res: Response) => {
     invitation.receiver_id = receiver_id ?? invitation.receiver_id
     invitation.status = status ?? invitation.status
 
-    invitation.updated_at = new Date().toISOString()
+    invitation.updated_at = getTimestampNow()
 
     await invitation.save()
 

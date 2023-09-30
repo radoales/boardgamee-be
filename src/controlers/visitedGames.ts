@@ -2,7 +2,7 @@
 import { Request, Response } from 'express'
 import VisitedGame from '../models/VisitedGame.js'
 import { User } from '../models/User.js'
-import { NOW } from '../utils/constants.js'
+import { getTimestampNow } from '../utils/constants.js'
 
 export const getVisitedGames = async (req: Request, res: Response) => {
   try {
@@ -69,7 +69,7 @@ export const upsertVisitedGame = async (req: Request, res: Response) => {
     const [visitedGame] = await VisitedGame.upsert(
       {
         game_id,
-        updated_at: NOW,
+        updated_at: getTimestampNow(),
         user_id
       },
       { returning: true }

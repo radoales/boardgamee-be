@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import jwt from 'jsonwebtoken'
 import { hashPassword } from '../utils/auth.js'
 import Auth from '../models/Auth.js'
-import { NOW } from '../utils/constants.js'
+import { getTimestampNow } from '../utils/constants.js'
 import { Op } from 'sequelize'
 
 export const register = async (req: Request, res: Response) => {
@@ -26,9 +26,9 @@ export const register = async (req: Request, res: Response) => {
 
     const user = await User.create({
       ...req.body,
-      created_at: NOW,
+      created_at: getTimestampNow(),
       id: userId,
-      updated_at: NOW,
+      updated_at: getTimestampNow(),
       username: email.split('@')[0]
     })
 
@@ -46,11 +46,11 @@ export const register = async (req: Request, res: Response) => {
     )
 
     await Auth.create({
-      created_at: NOW,
+      created_at: getTimestampNow(),
       id: uuidv4(),
       password: hashedPassword,
       refresh_token: refreshToken,
-      updated_at: NOW,
+      updated_at: getTimestampNow(),
       user_id: userId
     })
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import User from '../models/User.js'
 import { v4 as uuidv4 } from 'uuid'
-import { NOW } from '../utils/constants.js'
+import { getTimestampNow } from '../utils/constants.js'
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -66,9 +66,9 @@ export const createUser = async (req: Request, res: Response) => {
   try {
     const user = await User.create({
       ...req.body,
-      created_at: NOW,
+      created_at: getTimestampNow(),
       id: uuidv4(),
-      updated_at: NOW
+      updated_at: getTimestampNow()
     })
 
     return res.json(user)
@@ -102,7 +102,7 @@ export const updateUser = async (req: Request, res: Response) => {
     user.username = username ?? user.username
     user.push_notification_token =
       push_notification_token ?? user.push_notification_token
-    user.updated_at = NOW
+    user.updated_at = getTimestampNow()
     user.avatar_url = avatar_url ?? user.avatar_url
 
     await user.save()
