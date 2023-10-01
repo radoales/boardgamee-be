@@ -9,10 +9,13 @@ import compression from 'compression'
 import authenticateToken from './middlewares/auth.js'
 import userGamesRouter from './routes/userGames.js'
 import visitedGamesRouter from './routes/visitedGames.js'
+import appInsights from 'applicationinsights'
 
 const createServer = () => {
-  const app = express()
+  appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
+  appInsights.start()
 
+  const app = express()
   app
     .use(cors())
     .use(morgan('dev'))
