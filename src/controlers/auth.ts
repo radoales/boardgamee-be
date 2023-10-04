@@ -169,6 +169,86 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
   }
 }
 
+export const generateResetToken = async (req: Request, res: Response) => {
+  const { email } = req.body
+
+  try {
+    const user = await User.findOne({ where: { email } })
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found',
+        message: `User with email ${email} not found`
+      })
+    }
+
+    const resetToken = jwt.sign(
+      { email: user.email },
+      process.env.SECRET_KEY_RESET_TOKEN,
+      {
+        expiresIn: '1h'
+      }
+    )
+
+    await Auth.update(
+      { reset_token: resetToken },
+      { where: { user_id: user.id } }
+    )
+
+    return res.status(200).json({
+      message: 'Reset token generated successfully'
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
+    })
+  }
+}
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const { resetToken, password } = req.body
+
+  try {
+    const auth = await Auth.findOne({ where: { reset_token: resetToken } })
+    if (!auth) {
+      return res.status(401).json({
+        error: 'Unauthorized',
+        message: 'Invalid reset token'
+      })
+    }
+
+    jwt.verify(
+      resetToken,
+      process.env.SECRET_KEY_RESET_TOKEN,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (err: { message: string }, decoded: { email: string }) => {
+        if (err) {
+          return res.status(401).json({
+            error: 'Unauthorized',
+            message: ` not valid ${err.message}`
+          })
+        }
+
+        const hashedPassword = await hashPassword(password)
+
+        await Auth.update(
+          { password: hashedPassword, reset_token: null },
+          { where: { reset_token: resetToken } }
+        )
+
+        return res.status(200).json({
+          message: 'Reset password successfully'
+        })
+      }
+    )
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
+    })
+  }
+}
+
 export const logout = async (req: Request, res: Response) => {
   const { refreshToken } = req.body
 

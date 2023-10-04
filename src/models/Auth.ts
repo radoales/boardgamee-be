@@ -9,6 +9,7 @@ interface AuthAttributes {
   created_at: string
   updated_at: string
   refresh_token?: string
+  reset_token?: string
 }
 
 export class Auth extends Model<AuthAttributes> {
@@ -18,6 +19,7 @@ export class Auth extends Model<AuthAttributes> {
   declare created_at: string
   declare updated_at: string
   declare refresh_token?: string
+  declare reset_token?: string
 }
 
 Auth.init(
@@ -35,6 +37,9 @@ Auth.init(
       type: DataTypes.STRING
     },
     refresh_token: {
+      type: DataTypes.STRING
+    },
+    reset_token: {
       type: DataTypes.STRING
     },
     updated_at: {
