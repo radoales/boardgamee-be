@@ -228,6 +228,8 @@ export const generateResetToken = async (req: Request, res: Response) => {
                     <!-- Footer Section -->
                     <tr>
                         <td style="background-color: #f8f8f8; padding: 20px; text-align: center;">
+                            <!-- Add your logo in the footer -->
+                            <img src="https://firebasestorage.googleapis.com/v0/b/boardgamee-1fb35.appspot.com/o/main_logo_orange.png?alt=media&token=caced9ef-23ea-4db2-9de7-a8c931cfc97e&_gl=1*s8jnu5*_ga*MTAxNTg1OTYyMC4xNjkwODA1MzEx*_ga_CW55HF8NVT*MTY5NjQzNjYwMC4yOC4xLjE2OTY0MzY3NzMuNDguMC4w" alt="Boardgamee Logo" style="max-width: 150px;">
                             <p>&copy; 2023 Boardgamee. All rights reserved.</p>
                         </td>
                     </tr>
