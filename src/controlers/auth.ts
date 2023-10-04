@@ -211,7 +211,7 @@ export const generateResetToken = async (req: Request, res: Response) => {
                 <table width="600" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
                     <!-- Header Section -->
                     <tr>
-                        <td style="background-color: #007bff; padding: 20px;">
+                        <td style="background-color: #E3735E; padding: 20px;">
                             <h1 style="color: #ffffff; font-size: 24px;">Password Reset for Boardgamee</h1>
                         </td>
                     </tr>
@@ -220,7 +220,7 @@ export const generateResetToken = async (req: Request, res: Response) => {
                         <td style="padding: 20px;">
                             <p>Hello,</p>
                             <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
-                            <p><a href="${process.env.API_URL}/reset-password/${resetToken}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a></p>
+                            <p><a href="${process.env.API_URL}/reset-password/${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a></p>
                             <p>If you didn't request a password reset, you can ignore this email, and your password will remain unchanged.</p>
                             <p>Thank you for using Boardgamee!</p>
                         </td>
