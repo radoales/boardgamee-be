@@ -7,6 +7,7 @@ import { hashPassword } from '../utils/auth.js'
 import Auth from '../models/Auth.js'
 import { getTimestampNow } from '../utils/constants.js'
 import { Op } from 'sequelize'
+import { sendMail } from '../utils/email.js'
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -193,6 +194,15 @@ export const generateResetToken = async (req: Request, res: Response) => {
       { reset_token: resetToken },
       { where: { user_id: user.id } }
     )
+
+    sendMail({
+      html: `
+        <h1>Reset password</h1>
+        <p>Click this <a href="${process.env.API_URL}/reset-password/${resetToken}">link</a> to reset your password</p>
+      `,
+      subject: 'Reset password',
+      to: user.email
+    })
 
     return res.status(200).json({
       message: 'Reset token generated successfully'
