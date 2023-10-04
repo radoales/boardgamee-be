@@ -197,8 +197,46 @@ export const generateResetToken = async (req: Request, res: Response) => {
 
     sendMail({
       html: `
-        <h1>Reset password</h1>
-        <p>Click this <a href="${process.env.API_URL}/reset-password/${resetToken}">link</a> to reset your password</p>
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset for Boardgamee</title>
+</head>
+<body>
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                    <!-- Header Section -->
+                    <tr>
+                        <td style="background-color: #007bff; padding: 20px;">
+                            <h1 style="color: #ffffff; font-size: 24px;">Password Reset for Boardgamee</h1>
+                        </td>
+                    </tr>
+                    <!-- Email Content Section -->
+                    <tr>
+                        <td style="padding: 20px;">
+                            <p>Hello,</p>
+                            <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
+                            <p><a href="${process.env.API_URL}/reset-password/${resetToken}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a></p>
+                            <p>If you didn't request a password reset, you can ignore this email, and your password will remain unchanged.</p>
+                            <p>Thank you for using Boardgamee!</p>
+                        </td>
+                    </tr>
+                    <!-- Footer Section -->
+                    <tr>
+                        <td style="background-color: #f8f8f8; padding: 20px; text-align: center;">
+                            <p>&copy; 2023 Boardgamee. All rights reserved.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
       `,
       subject: 'Reset password',
       to: user.email
