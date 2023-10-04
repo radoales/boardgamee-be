@@ -254,7 +254,8 @@ export const generateResetToken = async (req: Request, res: Response) => {
 }
 
 export const resetPassword = async (req: Request, res: Response) => {
-  const { resetToken, password } = req.body
+  const { password } = req.body
+  const { resetToken } = req.params
 
   try {
     const auth = await Auth.findOne({ where: { reset_token: resetToken } })

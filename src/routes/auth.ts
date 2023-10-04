@@ -15,6 +15,6 @@ router.post('/register', register)
 router.post('/refresh', refreshAccessToken)
 router.post('/logout', logout)
 router.post('/reset-password-request', generateResetToken)
-router.post('/reset-password', resetPassword)
+router.post('/reset-password:resetToken,', resetPassword)
 
 export default router
