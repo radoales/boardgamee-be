@@ -220,11 +220,11 @@ export const generateResetToken = async (req: Request, res: Response) => {
                                   <p>Hello,</p>
                                   <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
                                   <p>
-                                      <a href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a>
+                                      <a href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=PasswordReset&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a>
                                   </p>
                                   <p>If the button above does not work, you can manually copy and paste the link below into your browser's address bar:</p>
                                   <p>
-                                      <input type="text" id="linkToCopy" value="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="width: 100%; padding: 5px;">
+                                      <input type="text" id="linkToCopy" value="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=PasswordReset&resetToken=${resetToken}" style="width: 100%; padding: 5px;">
                                   </p>
                                   <p>
                                       <button onclick="copyLink()">Copy Link</button>
