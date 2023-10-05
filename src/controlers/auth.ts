@@ -244,27 +244,18 @@ export const generateResetToken = async (req: Request, res: Response) => {
               </tr>
           </table>
       
-          <!-- JavaScript -->
+          <!-- JavaScript to copy the link -->
           <script>
               function copyLink() {
                   var linkToCopy = document.getElementById("linkToCopy");
-                  
-                  var tempTextArea = document.createElement("textarea");
-                  tempTextArea.value = linkToCopy.value;
-                  
-                  document.body.appendChild(tempTextArea);
-                  
-                  tempTextArea.select();
+                  linkToCopy.select();
+                  linkToCopy.setSelectionRange(0, 99999); // For mobile devices
                   document.execCommand("copy");
-                  
-                  document.body.removeChild(tempTextArea);
-                  
                   alert("Link copied to clipboard: " + linkToCopy.value);
               }
           </script>
       </body>
-      </html>
-           
+      </html>      
       `,
       subject: 'Reset password',
       to: user.email
