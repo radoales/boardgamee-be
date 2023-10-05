@@ -196,7 +196,7 @@ export const generateResetToken = async (req: Request, res: Response) => {
     )
 
     sendMail({
-      html: `
+      html: ` 
       <html lang="en">
       <head>
           <meta charset="UTF-8">
@@ -208,12 +208,27 @@ export const generateResetToken = async (req: Request, res: Response) => {
               <tr>
                   <td align="center">
                       <table width="600" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                          <!-- Logo Section -->
+                          <tr>
+                              <td align="center" style="padding: 2rem;">
+                                  <img src="https://firebasestorage.googleapis.com/v0/b/boardgamee-1fb35.appspot.com/o/main_logo_orange.png?alt=media&token=caced9ef-23ea-4db2-9de7-a8c931cfc97e&_gl=1*s8jnu5*_ga*MTAxNTg1OTYyMC4xNjkwODA1MzEx*_ga_CW55HF8NVT*MTY5NjQzNjYwMC4yOC4xLjE2OTY0MzY3NzMuNDguMC4w" alt="Boardgamee Logo" style="max-width: 150px;">
+                              </td>
+                          </tr>
                           <!-- Email Content Section -->
                           <tr>
                               <td style="padding: 20px;">
                                   <p>Hello,</p>
                                   <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
-                                  <p><span id="link" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</span></p>
+                                  <p>
+                                      <a href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a>
+                                  </p>
+                                  <p>If the button above does not work, you can manually copy and paste the link below into your browser's address bar:</p>
+                                  <p>
+                                      <input type="text" id="linkToCopy" value="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="width: 100%; padding: 5px;">
+                                  </p>
+                                  <p>
+                                      <button onclick="copyLink()">Copy Link</button>
+                                  </p>
                                   <p>If you didn't request a password reset, you can ignore this email, and your password will remain unchanged.</p>
                                   <p>Thank you for using Boardgamee!</p>
                               </td>
@@ -229,12 +244,15 @@ export const generateResetToken = async (req: Request, res: Response) => {
               </tr>
           </table>
       
-          <!-- JavaScript -->
+          <!-- JavaScript to copy the link -->
           <script>
-          document.getElementById('link').addEventListener('click', function(event) {
-              event.preventDefault();
-              window.location.href = 'exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}';
-          });
+              function copyLink() {
+                  var linkToCopy = document.getElementById("linkToCopy");
+                  linkToCopy.select();
+                  linkToCopy.setSelectionRange(0, 99999); // For mobile devices
+                  document.execCommand("copy");
+                  alert("Link copied to clipboard: " + linkToCopy.value);
+              }
           </script>
       </body>
       </html>      
