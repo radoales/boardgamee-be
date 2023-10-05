@@ -199,6 +199,12 @@ export const generateResetToken = async (req: Request, res: Response) => {
       html: `
      
 <html lang="en">
+
+<script>
+document.getElementById('link').addEventListener('click', function() {
+    window.location.href = 'exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}';
+});
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -218,7 +224,7 @@ export const generateResetToken = async (req: Request, res: Response) => {
                         <td style="padding: 20px;">
                             <p>Hello,</p>
                             <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
-                            <p><a href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a></p>
+                            <p><a id="link" href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=NewPassword&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a></p>
                             <p>If you didn't request a password reset, you can ignore this email, and your password will remain unchanged.</p>
                             <p>Thank you for using Boardgamee!</p>
                         </td>
