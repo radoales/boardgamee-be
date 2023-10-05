@@ -186,7 +186,7 @@ export const generateResetToken = async (req: Request, res: Response) => {
       { email: user.email },
       process.env.SECRET_KEY_RESET_TOKEN,
       {
-        expiresIn: '1h'
+        expiresIn: '10min'
       }
     )
 
@@ -211,24 +211,18 @@ export const generateResetToken = async (req: Request, res: Response) => {
                           <!-- Logo Section -->
                           <tr>
                               <td align="center" style="padding: 2rem;">
-                                  <img src="https://firebasestorage.googleapis.com/v0/b/boardgamee-1fb35.appspot.com/o/main_logo_orange.png?alt=media&token=caced9ef-23ea-4db2-9de7-a8c931cfc97e&_gl=1*s8jnu5*_ga*MTAxNTg1OTYyMC4xNjkwODA1MzEx*_ga_CW55HF8NVT*MTY5NjQzNjYwMC4yOC4xLjE2OTY0MzY3NzMuNDguMC4w" alt="Boardgamee Logo" style="max-width: 150px;">
+                                  <img src="https://firebasestorage.googleapis.com/v0/b/boardgamee-1fb35.appspot.com/o/main_logo_orange.png?alt=media&token=caced9ef-23ea-4db2-9de7-a8c931cfc97e&_gl=1*s8jnu5*_ga*MTAxNTg1OTYyMC4xNjkwODA5MDM3*_ga_CW55HF8NVT*MTY5NjY2NTMwNC4yNy4xLjE2OTY2NjUzMDQuMC4w" alt="Boardgamee Logo" style="max-width: 150px;">
                               </td>
                           </tr>
                           <!-- Email Content Section -->
                           <tr>
                               <td style="padding: 20px;">
                                   <p>Hello,</p>
-                                  <p>We received a request to reset your password for Boardgamee. To reset your password, please click the button below:</p>
-                                  <p>
-                                      <a href="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=ProfileTabScreen&resetToken=${resetToken}" style="background-color: #E3735E; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block;">Reset Password</a>
-                                  </p>
-                                  <p>If the button above does not work, you can manually copy and paste the link below into your browser's address bar:</p>
-                                  <p>
-                                      <input type="text" id="linkToCopy" value="exp://u.expo.dev/a0f2881c-1533-4457-bd87-e4dd58776651?channel-name=preview&runtime-version=exposdk:49.0.0&screen=ProfileTabScreen&resetToken=${resetToken}" style="width: 100%; padding: 5px;">
-                                  </p>
-                                  <p>
-                                      <button onclick="copyLink()">Copy Link</button>
-                                  </p>
+                                  <p>We received a request to reset your password for Boardgamee. To reset your password, please copy the following key and paste it into the app:</p>
+                                 <span style="font-size: 24px; font-weight: bold; color: #E3735E;">Reset Key:</span>
+      <span style="font-size: 28px; color: #333333; background-color: #F5F5F5; padding: 10px; border-radius: 5px; display: inline-block;">
+          ${resetToken}
+      </span>
                                   <p>If you didn't request a password reset, you can ignore this email, and your password will remain unchanged.</p>
                                   <p>Thank you for using Boardgamee!</p>
                               </td>
@@ -243,17 +237,6 @@ export const generateResetToken = async (req: Request, res: Response) => {
                   </td>
               </tr>
           </table>
-      
-          <!-- JavaScript to copy the link -->
-          <script>
-              function copyLink() {
-                  var linkToCopy = document.getElementById("linkToCopy");
-                  linkToCopy.select();
-                  linkToCopy.setSelectionRange(0, 99999); // For mobile devices
-                  document.execCommand("copy");
-                  alert("Link copied to clipboard: " + linkToCopy.value);
-              }
-          </script>
       </body>
       </html>      
       `,
