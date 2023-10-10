@@ -10,6 +10,8 @@ import authenticateToken from './middlewares/auth.js'
 import userGamesRouter from './routes/userGames.js'
 import visitedGamesRouter from './routes/visitedGames.js'
 import categoiesRouter from './routes/categories.js'
+import locationsRouter from './routes/locations.js'
+import gameEventsRouter from './routes/gameEvents.js'
 
 const createServer = () => {
   const app = express()
@@ -24,6 +26,8 @@ const createServer = () => {
     .use('/api/usergames', authenticateToken, userGamesRouter)
     .use('/api/visitedgames', authenticateToken, visitedGamesRouter)
     .use('/api/categories', authenticateToken, categoiesRouter)
+    .use('/api/locations', authenticateToken, locationsRouter)
+    .use('/api/gameevents', authenticateToken, gameEventsRouter)
     .use('/api/auth', authRouter)
 
   app.listen(process.env.PORT, () => {

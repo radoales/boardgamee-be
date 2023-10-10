@@ -10,7 +10,7 @@ import {
 const router = express.Router()
 
 router.get('/', getUserGames)
-router.get('/:userId', getUserGameByUserId) //TODO: change to getUserGamesByUserId
+router.get('/:userId', getUserGameByUserId)
 router.post('/', createUserGame)
 router.put('/:id', updateUserGame)
 router.delete('/:id', deleteUserGame)
