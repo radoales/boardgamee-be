@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
-interface UserAttributes {
+interface LocationAttributes {
   id: string
   name: string
   address: string
@@ -12,7 +12,7 @@ interface UserAttributes {
   updated_at: string
 }
 
-export class Location extends Model<UserAttributes> {
+export class Location extends Model<LocationAttributes> {
   declare id: string
   declare name: string
   declare address: string

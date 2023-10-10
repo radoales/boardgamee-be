@@ -20,25 +20,25 @@ export class UserGame extends Model<UserGameAttributes> {
 
 UserGame.init(
   {
+    created_at: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    game_id: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     id: {
       primaryKey: true,
       type: DataTypes.UUID
     },
-    game_id: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.STRING
     },
     user_id: {
       allowNull: true,
       type: DataTypes.UUID
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.STRING
     }
   },
   {

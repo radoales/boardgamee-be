@@ -3,7 +3,7 @@ import sequelize from '../config/database.js'
 import User from './User.js'
 import Location from './Location.js'
 
-interface UserAttributes {
+interface GameEventAttributes {
   id: string
   name: string
   game_id: string
@@ -16,7 +16,7 @@ interface UserAttributes {
   location_id: string
 }
 
-export class GameEvent extends Model<UserAttributes> {
+export class GameEvent extends Model<GameEventAttributes> {
   declare id: string
   declare name: string
   declare game_id: string
