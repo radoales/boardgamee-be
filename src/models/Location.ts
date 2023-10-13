@@ -10,6 +10,8 @@ interface LocationAttributes {
   zip: string
   created_at: string
   updated_at: string
+  lat: number
+  lon: number
 }
 
 export class Location extends Model<LocationAttributes> {
@@ -44,6 +46,14 @@ Location.init(
     id: {
       primaryKey: true,
       type: DataTypes.UUID
+    },
+    lat: {
+      allowNull: true,
+      type: DataTypes.FLOAT
+    },
+    lon: {
+      allowNull: true,
+      type: DataTypes.FLOAT
     },
     name: {
       allowNull: true,
