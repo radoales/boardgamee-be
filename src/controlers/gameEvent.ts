@@ -2,18 +2,44 @@ import { Request, Response } from 'express'
 import GameEvent from '../models/GameEvent.js'
 import { getTimestampNow } from '../utils/constants.js'
 import { v4 as uuidv4 } from 'uuid'
+import sequelize from '../config/database.js'
+import Location from '../models/Location.js'
 
 export const createGameEvent = async (req: Request, res: Response) => {
+  const transaction = await sequelize.transaction()
   try {
-    const gameEvent = await GameEvent.create({
-      ...req.body,
-      created_at: getTimestampNow(),
-      id: uuidv4(),
-      updated_at: getTimestampNow()
-    })
+    const locationId = uuidv4()
+    Location.create(
+      {
+        ...req.body.location,
+        created_at: getTimestampNow(),
+        id: locationId,
+        updated_at: getTimestampNow()
+      },
+      {
+        transaction
+      }
+    )
+
+    const gameEvent = await GameEvent.create(
+      {
+        ...req.body.gameEvent,
+        created_at: getTimestampNow(),
+        id: uuidv4(),
+        location_id: locationId,
+        updated_at: getTimestampNow()
+      },
+      {
+        transaction
+      }
+    )
+
+    await transaction.commit()
 
     return res.json(gameEvent)
   } catch (error) {
+    await transaction.rollback()
+
     return res.status(500).json({
       error: 'Internal server error',
       message: error.original?.message ?? error.message
