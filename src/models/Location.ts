@@ -7,6 +7,7 @@ interface LocationAttributes {
   address: string
   city: string
   country: string
+  country_code: string
   zip: string
   created_at: string
   updated_at: string
@@ -22,7 +23,10 @@ export class Location extends Model<LocationAttributes> {
   declare created_at: string
   declare updated_at: string
   declare country: string
+  declare country_code: string
   declare zip: string
+  declare lat: number
+  declare lon: number
 }
 
 Location.init(
@@ -36,6 +40,10 @@ Location.init(
       type: DataTypes.STRING
     },
     country: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    country_code: {
       allowNull: false,
       type: DataTypes.STRING
     },
