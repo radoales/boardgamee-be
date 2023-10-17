@@ -4,6 +4,7 @@ import { getTimestampNow } from '../utils/constants.js'
 import { v4 as uuidv4 } from 'uuid'
 import sequelize from '../config/database.js'
 import Location from '../models/Location.js'
+import { getDistanceBetweenLocations } from '../utils/location.js'
 
 export const createGameEvent = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction()
@@ -49,8 +50,36 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
 export const getGameEvents = async (req: Request, res: Response) => {
   try {
-    const gameEvents = await GameEvent.findAll()
-    return res.json(gameEvents)
+    const gameEvents = await GameEvent.findAll({
+      include: [
+        {
+          as: 'location',
+          attributes: ['lat', 'lon'],
+          model: Location
+        }
+      ]
+    })
+
+    const { lat, lon } = req.query
+
+    if (!lat || !lon) {
+      return res.status(400).json({ error: 'Invalid user location' })
+    }
+
+    gameEvents.forEach((gameEvent) => {
+      const location = gameEvent.getDataValue('location')
+      if (gameEvent.getDataValue('location')) {
+        const distance = getDistanceBetweenLocations(
+          { lat: parseFloat(lat as string), lon: parseFloat(lon as string) },
+          location
+        )
+        gameEvent.setDataValue('distance', distance)
+      }
+    })
+
+    return res.json(
+      gameEvents.sort((a, b) => a.dataValues.distance - b.dataValues.distance)
+    )
   } catch (error) {
     return res.status(500).json({
       error: 'Internal server error',

@@ -14,6 +14,8 @@ interface GameEventAttributes {
   start_at: string
   end_at: string
   location_id: string
+  location?: Location
+  distance?: number
 }
 
 export class GameEvent extends Model<GameEventAttributes> {
@@ -79,5 +81,7 @@ GameEvent.init(
     timestamps: false
   }
 )
+
+GameEvent.belongsTo(Location, { as: 'location', foreignKey: 'location_id' })
 
 export default GameEvent
