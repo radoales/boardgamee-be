@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import sequelize from '../config/database.js'
 import Location from '../models/Location.js'
 import { getDistanceBetweenLocations } from '../utils/location.js'
+import { Op } from 'sequelize'
 
 export const createGameEvent = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction()
@@ -50,6 +51,8 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
 export const getGameEvents = async (req: Request, res: Response) => {
   try {
+    const { lat, lon, search } = req.query
+
     const gameEvents = await GameEvent.findAll({
       include: [
         {
@@ -57,10 +60,13 @@ export const getGameEvents = async (req: Request, res: Response) => {
           attributes: ['lat', 'lon'],
           model: Location
         }
-      ]
+      ],
+      where: search && {
+        name: {
+          [Op.iLike]: `%${req.query.search}%`
+        }
+      }
     })
-
-    const { lat, lon } = req.query
 
     if (!lat || !lon) {
       return res.status(400).json({ error: 'Invalid user location' })
