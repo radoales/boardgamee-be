@@ -18,6 +18,7 @@ interface GameEventAttributes {
   location?: Location
   distance?: number
   image_url: string
+  description?: string
 }
 
 export class GameEvent extends Model<GameEventAttributes> {
@@ -33,6 +34,7 @@ export class GameEvent extends Model<GameEventAttributes> {
   declare location_id: ForeignKey<Location['id']>
   declare image_url: string
   declare total_spots: number
+  declare description?: string
 }
 
 GameEvent.init(
@@ -43,6 +45,10 @@ GameEvent.init(
     },
     created_at: {
       allowNull: false,
+      type: DataTypes.STRING
+    },
+    description: {
+      allowNull: true,
       type: DataTypes.STRING
     },
     end_at: {
