@@ -12,6 +12,7 @@ import visitedGamesRouter from './routes/visitedGames.js'
 import categoiesRouter from './routes/categories.js'
 import locationsRouter from './routes/locations.js'
 import gameEventsRouter from './routes/gameEvents.js'
+import gameEventRequestsRouter from './routes/gameEventRequests.js'
 
 const createServer = () => {
   const app = express()
@@ -28,6 +29,7 @@ const createServer = () => {
     .use('/api/categories', authenticateToken, categoiesRouter)
     .use('/api/locations', authenticateToken, locationsRouter)
     .use('/api/gameevents', authenticateToken, gameEventsRouter)
+    .use('/api/gameeventrequests', authenticateToken, gameEventRequestsRouter)
     .use('/api/auth', authRouter)
 
   app.listen(process.env.PORT, () => {
