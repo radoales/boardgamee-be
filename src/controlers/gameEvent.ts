@@ -51,7 +51,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
 export const getGameEvents = async (req: Request, res: Response) => {
   try {
-    const { lat, lon, search } = req.query
+    const { lat, lon, search, radius } = req.query
 
     const gameEvents = await GameEvent.findAll({
       include: [
@@ -84,7 +84,13 @@ export const getGameEvents = async (req: Request, res: Response) => {
     })
 
     return res.json(
-      gameEvents.sort((a, b) => a.dataValues.distance - b.dataValues.distance)
+      gameEvents
+        .filter(
+          (gameEvent) =>
+            gameEvent.dataValues.distance <
+            parseInt((radius as string) ?? '10000')
+        )
+        .sort((a, b) => a.dataValues.distance - b.dataValues.distance)
     )
   } catch (error) {
     return res.status(500).json({
