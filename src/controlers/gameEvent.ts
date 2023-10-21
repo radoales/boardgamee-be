@@ -87,8 +87,7 @@ export const getGameEvents = async (req: Request, res: Response) => {
       gameEvents
         .filter(
           (gameEvent) =>
-            gameEvent.dataValues.distance <
-            parseInt((radius as string) ?? '10000')
+            gameEvent.dataValues.distance < parseInt((radius as string) ?? '10')
         )
         .sort((a, b) => a.dataValues.distance - b.dataValues.distance)
     )
