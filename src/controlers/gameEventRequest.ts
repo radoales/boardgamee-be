@@ -2,18 +2,39 @@ import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import GameEventRequest from '../models/GameEventRequest.js'
 import { getTimestampNow } from '../utils/constants.js'
+import User from '../models/User.js'
+import GameEvent from '../models/GameEvent.js'
+import sendNotification from '../utils/notifications.js'
 
 export const createGameEventRequest = async (req: Request, res: Response) => {
   try {
+    const { game_event_id, message, request_user_id } = req.body
+
     const gameEventRequest = await GameEventRequest.create({
       created_at: getTimestampNow(),
-      game_event_id: req.body.game_event_id,
+      game_event_id: game_event_id,
       id: uuidv4(),
-      message: req.body.message,
-      request_user_id: req.body.request_user_id,
+      message: message,
+      request_user_id: request_user_id,
       status: 'pending',
       updated_at: getTimestampNow()
     })
+
+    const gameEvent = await GameEvent.findByPk(game_event_id)
+
+    const sender = await User.findByPk(request_user_id)
+    const receiver = await User.findByPk(gameEvent.owner_user_id)
+
+    if (receiver) {
+      await sendNotification({
+        body: `${
+          sender?.name ?? sender.username ?? sender.email
+        } wants to play ${gameEvent.name} with you!`,
+        data: { url: 'EventsTabScreen' },
+        pushTokens: [receiver.push_notification_token],
+        title: 'Request to join the game event'
+      })
+    }
 
     return res.json(gameEventRequest)
   } catch (error) {

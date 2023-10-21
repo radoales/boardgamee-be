@@ -22,25 +22,25 @@ export class Invitation extends Model<InvitationAttributes> {
 
 Invitation.init(
   {
+    created_at: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     id: {
       primaryKey: true,
-      type: DataTypes.UUID
-    },
-    sender_id: {
-      allowNull: false,
       type: DataTypes.UUID
     },
     receiver_id: {
       allowNull: false,
       type: DataTypes.UUID
     },
+    sender_id: {
+      allowNull: false,
+      type: DataTypes.UUID
+    },
     status: {
       allowNull: false,
       type: DataTypes.SMALLINT
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.STRING
     },
     updated_at: {
       allowNull: false,
