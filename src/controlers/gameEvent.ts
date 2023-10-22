@@ -51,7 +51,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
 export const getGameEvents = async (req: Request, res: Response) => {
   try {
-    const { lat, lon, search, radius } = req.query
+    const { lat, lon, search, radius, status } = req.query
 
     const gameEvents = await GameEvent.findAll({
       include: [
@@ -61,10 +61,32 @@ export const getGameEvents = async (req: Request, res: Response) => {
           model: Location
         }
       ],
-      where: search && {
-        name: {
-          [Op.iLike]: `%${req.query.search}%`
-        }
+      where: {
+        [Op.and]: [
+          search && {
+            name: {
+              [Op.iLike]: `%${search}%`
+            }
+          },
+          status === 'past' && {
+            end_at: {
+              [Op.lt]: getTimestampNow()
+            }
+          },
+          status === 'now' && {
+            end_at: {
+              [Op.gte]: getTimestampNow()
+            },
+            start_at: {
+              [Op.lte]: getTimestampNow()
+            }
+          },
+          status === 'soon' && {
+            start_at: {
+              [Op.gt]: getTimestampNow()
+            }
+          }
+        ]
       }
     })
 
