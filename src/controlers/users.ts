@@ -96,7 +96,7 @@ export const updateUser = async (req: Request, res: Response) => {
         message: `User with ID ${id} not found`
       })
     }
-
+    user.id = user.id
     user.name = name ?? user.name
     user.email = email ?? user.email
     user.username = username ?? user.username
