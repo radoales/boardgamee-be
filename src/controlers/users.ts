@@ -107,7 +107,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     await user.save()
 
-    return res.json({ message: 'User updated successfully', user })
+    return res.status(200).json(user)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('error', error)
