@@ -96,7 +96,7 @@ export const getGameEvents = async (req: Request, res: Response) => {
 
     gameEvents.forEach((gameEvent) => {
       const location = gameEvent.getDataValue('location')
-      if (gameEvent.getDataValue('location')) {
+      if (location) {
         const distance = getDistanceBetweenLocations(
           { lat: parseFloat(lat as string), lon: parseFloat(lon as string) },
           location
@@ -124,7 +124,21 @@ export const getGameEvents = async (req: Request, res: Response) => {
 export const getGameEventById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
+    const { lat, lon } = req.query
     const gameEvent = await GameEvent.findByPk(id)
+
+    if (!lat || !lon) {
+      return res.status(400).json({ error: 'Invalid user location' })
+    }
+
+    const location = gameEvent.getDataValue('location')
+    if (location) {
+      const distance = getDistanceBetweenLocations(
+        { lat: parseFloat(lat as string), lon: parseFloat(lon as string) },
+        location
+      )
+      gameEvent.setDataValue('distance', distance)
+    }
 
     if (!gameEvent) {
       return res.status(404).json({
