@@ -125,7 +125,15 @@ export const getGameEventById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
     const { lat, lon } = req.query
-    const gameEvent = await GameEvent.findByPk(id)
+    const gameEvent = await GameEvent.findByPk(id, {
+      include: [
+        {
+          as: 'location',
+          attributes: ['lat', 'lon'],
+          model: Location
+        }
+      ]
+    })
 
     if (!lat || !lon) {
       return res.status(400).json({ error: 'Invalid user location' })
