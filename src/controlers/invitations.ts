@@ -102,6 +102,22 @@ export const updateInvitation = async (req: Request, res: Response) => {
 
     invitation.updated_at = getTimestampNow()
 
+    if (invitation.status === 1) {
+      const sender = await User.findByPk(sender_id)
+      const receiver = await User.findByPk(receiver_id)
+
+      if (sender && receiver) {
+        await sendNotification({
+          body: `${
+            receiver?.name ?? receiver.username ?? receiver.email
+          } accepted your friend request!`,
+          data: { url: 'FriendsTabScreen' },
+          pushTokens: [sender.push_notification_token],
+          title: 'Friend Request Accepted'
+        })
+      }
+    }
+
     await invitation.save()
 
     return res.json({ invitation, message: 'Invitation updated successfully' })
