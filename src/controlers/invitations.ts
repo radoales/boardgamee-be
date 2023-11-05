@@ -120,7 +120,7 @@ export const updateInvitation = async (req: Request, res: Response) => {
 
     await invitation.save()
 
-    return res.json({ invitation, message: 'Invitation updated successfully' })
+    return res.json(invitation)
   } catch (error) {
     console.error('Error:', error)
     return res.status(500).json({
