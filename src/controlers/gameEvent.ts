@@ -51,7 +51,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
 export const getGameEvents = async (req: Request, res: Response) => {
   try {
-    const { lat, lon, search, radius, status } = req.query
+    const { lat, lon, search, radius, status, game_id } = req.query
 
     const gameEvents = await GameEvent.findAll({
       include: [
@@ -85,6 +85,9 @@ export const getGameEvents = async (req: Request, res: Response) => {
             start_at: {
               [Op.gt]: getTimestampNow()
             }
+          },
+          game_id && {
+            game_id: game_id as string
           }
         ]
       }
