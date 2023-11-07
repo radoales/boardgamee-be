@@ -38,7 +38,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
     await transaction.commit()
 
-    return res.json({ ...gameEvent, location })
+    return res.json({ ...gameEvent.dataValues, location })
   } catch (error) {
     await transaction.rollback()
 
