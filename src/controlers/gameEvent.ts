@@ -11,7 +11,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction()
   try {
     const locationId = uuidv4()
-    Location.create(
+    const location = await Location.create(
       {
         ...req.body.location,
         created_at: getTimestampNow(),
@@ -38,7 +38,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
 
     await transaction.commit()
 
-    return res.json(gameEvent)
+    return res.json({ ...gameEvent, location })
   } catch (error) {
     await transaction.rollback()
 
