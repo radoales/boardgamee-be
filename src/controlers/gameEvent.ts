@@ -10,10 +10,11 @@ import { Op } from 'sequelize'
 export const createGameEvent = async (req: Request, res: Response) => {
   const transaction = await sequelize.transaction()
   try {
+    const { lat, lon, location, gameEvent } = req.body
     const locationId = uuidv4()
-    const location = await Location.create(
+    const createdLocation = await Location.create(
       {
-        ...req.body.location,
+        ...location,
         created_at: getTimestampNow(),
         id: locationId,
         updated_at: getTimestampNow()
@@ -23,9 +24,9 @@ export const createGameEvent = async (req: Request, res: Response) => {
       }
     )
 
-    const gameEvent = await GameEvent.create(
+    const createdGameEvent = await GameEvent.create(
       {
-        ...req.body.gameEvent,
+        ...gameEvent,
         created_at: getTimestampNow(),
         id: uuidv4(),
         location_id: locationId,
@@ -36,9 +37,20 @@ export const createGameEvent = async (req: Request, res: Response) => {
       }
     )
 
+    if (location) {
+      const distance = getDistanceBetweenLocations(
+        { lat: parseFloat(lat as string), lon: parseFloat(lon as string) },
+        location
+      )
+      gameEvent.setDataValue('distance', distance)
+    }
+
     await transaction.commit()
 
-    return res.json({ ...gameEvent.dataValues, location })
+    return res.json({
+      ...createdGameEvent.dataValues,
+      location: createdLocation
+    })
   } catch (error) {
     await transaction.rollback()
 
