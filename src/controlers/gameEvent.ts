@@ -42,7 +42,7 @@ export const createGameEvent = async (req: Request, res: Response) => {
         { lat: parseFloat(lat as string), lon: parseFloat(lon as string) },
         location
       )
-      gameEvent.setDataValue('distance', distance)
+      createdGameEvent.setDataValue('distance', distance)
     }
 
     await transaction.commit()
