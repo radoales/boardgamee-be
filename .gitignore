@@ -4,3 +4,5 @@ npm-debug.*
 web-build/
 .env
 *.rest
+
+.vercel
